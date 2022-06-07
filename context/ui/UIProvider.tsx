@@ -17,10 +17,16 @@ const UI_INITIAL_STATE: UIState = {
 export const UIProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(uiReducer, UI_INITIAL_STATE);
 
+  const openSideMenu = () => dispatch({ type: 'UI_OPEN_SIDEBAR' });
+  const closeSideMenu = () => dispatch({ type: 'UI_CLOSE_SIDEBAR' });
+
   return (
     <UIContext.Provider
       value={{
-        sidemenuOpen: false,
+        ...state,
+        //Methods
+        openSideMenu,
+        closeSideMenu,
       }}
     >
       {children}

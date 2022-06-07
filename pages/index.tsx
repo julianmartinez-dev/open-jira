@@ -5,7 +5,7 @@ import { Layout } from '../componentes/layouts';
 const Home: NextPage = () => {
   return (
   <Layout title='OpenJira - Home'>
-    <Typography variant='h1' color={'primary'}>Hola Mundo</Typography>;
+    <Typography variant='h1' color={'primary'}>Hola Mundo</Typography>
   </Layout>
 )}
 
