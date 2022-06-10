@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Button, TextField, Box } from '@mui/material'
 import SaveIcon from '@mui/icons-material/Save';
 import CancelIcon from '@mui/icons-material/Cancel';
 import AddIcon from '@mui/icons-material/Add';
+import { EntriesContext } from '../../context/entries';
+import { UIContext } from '../../context/ui';
 
 export const NewEntry = () => {
 
-  const [ isAdding, setIsAdding ] = useState(false);
+  const { addNewEntry } = useContext(EntriesContext);
+  const { addingEntry, setAddingEntry } = useContext(UIContext)
+
   const [ inputValue, setInputValue] = useState('');
   const [ touched, setTouched ] = useState(false);
 
@@ -16,15 +20,23 @@ export const NewEntry = () => {
 
   const onSave = () => {
     if(inputValue.length <= 0 ) return;
-    console.log(inputValue);
+    addNewEntry(inputValue);
+    cleanState();
+  }
+
+  const onCancel = () =>{
+    cleanState()
+  }
+
+  const cleanState = () => {
     setTouched(false);
+    setAddingEntry(false);
     setInputValue('');
-    setIsAdding(false);
   }
 
   return (
     <Box sx={{ marginBottom: 2, paddingX: 2 }}>
-      {isAdding ? (
+      {addingEntry ? (
         <>
           <TextField
             fullWidth
@@ -45,7 +57,7 @@ export const NewEntry = () => {
 
           <Box display={'flex'} justifyContent={'space-around'}>
             <Button
-              onClick={() => setIsAdding(false)}
+              onClick={onCancel}
               variant="outlined"
               color="error"
               endIcon={<CancelIcon />}
@@ -53,7 +65,12 @@ export const NewEntry = () => {
               Cancelar
             </Button>
 
-            <Button onClick={onSave} variant="outlined" color="secondary" endIcon={<SaveIcon />}>
+            <Button
+              onClick={onSave}
+              variant="outlined"
+              color="secondary"
+              endIcon={<SaveIcon />}
+            >
               Guardar
             </Button>
           </Box>
@@ -64,7 +81,7 @@ export const NewEntry = () => {
           fullWidth
           variant="outlined"
           color="info"
-          onClick={() => setIsAdding(true)}
+          onClick={() => setAddingEntry(true)}
         >
           Agregar entrada
         </Button>
