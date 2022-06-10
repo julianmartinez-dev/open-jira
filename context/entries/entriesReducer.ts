@@ -3,7 +3,8 @@ import { EntriesState } from './';
 
 type EntriesActionType =
   | { type: 'ENTRY_ADD_ENTRY'; payload: Entry }
-  | { type: 'ENTRY_UPDATED'; payload: Entry };
+  | { type: 'ENTRY_UPDATED'; payload: Entry }
+  | { type: 'ENTRY_REFRESH_DATA'; payload: Entry[] };
 
 export const entriesReducer = (
   state: EntriesState,
@@ -24,6 +25,11 @@ export const entriesReducer = (
           }
           return entry;
         })
+      }
+    case 'ENTRY_REFRESH_DATA':
+      return {
+        ...state,
+        entries:[...action.payload]
       }
 
     default:
