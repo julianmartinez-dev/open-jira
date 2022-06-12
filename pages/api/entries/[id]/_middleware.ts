@@ -6,9 +6,10 @@ export default function middleware(req: NextRequest, ev: NextFetchEvent) {
 
   const id = req.page.params?.id || ''
 
+  console.log(id)
   const checkMongoIDRegex = new RegExp("^[0-9a-fA-F]{24}$");
 
-   if(!checkMongoIDRegex.test( id )){
+   if(!checkMongoIDRegex.test( id as string)){
         return new NextResponse(
           JSON.stringify({ message: 'ID Inválido: ' + id }),
           {
