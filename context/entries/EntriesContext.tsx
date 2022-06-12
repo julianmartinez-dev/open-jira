@@ -4,6 +4,7 @@ import { Entry } from '../../interfaces'
 interface ContextProps {
   entries: Entry[];
   addNewEntry: (description: string) => void;
-  updateEntry: (entry: Entry) => void;
+  updateEntry: (entry: Entry, showSnackbar?: boolean) => void;
+  deleteEntry: (_id: string) => void;
 }
 export const EntriesContext = createContext({} as ContextProps);
